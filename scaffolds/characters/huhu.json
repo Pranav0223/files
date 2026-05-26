@@ -1,0 +1,23 @@
+{
+  "character_id": "huhu",
+  "name": "Huhu",
+  "aliases": ["crocodile", "Huhu the gandharva", "demon crocodile"],
+  "being_type": "Asura",
+  "former_life": "Gandharva cursed to become crocodile",
+  "physical": {
+    "skin_color": "dark green",
+    "num_arms": 2,
+    "right_hand": "gripping Gajendra's leg",
+    "left_hand": "in water",
+    "crown": "none",
+    "clothing": "none - crocodile form",
+    "ornaments": [],
+    "build": "large powerful crocodile",
+    "posture": "submerged in lake, gripping elephant's leg"
+  },
+  "scale": {
+    "yuga": "Satya Yuga",
+    "normal_scale": "large crocodile",
+    "mythological_scale": null
+  }
+}

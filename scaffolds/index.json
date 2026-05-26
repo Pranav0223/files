@@ -1,0 +1,18 @@
+{
+  "stories": [
+    {
+      "story_id": "gajendra_moksham",
+      "story_name": "Gajendra Moksham",
+      "skandha": "8",
+      "key_characters": ["gajendra", "huhu", "vishnu", "garuda"],
+      "key_terms": ["Gajendra", "crocodile", "lake", "Trikuta", "elephant", "moksha"]
+    },
+    {
+      "story_id": "vamana_charitam",
+      "story_name": "Vamana Charitam",
+      "skandha": "8",
+      "key_characters": ["vamana", "bali_chakravarti", "shukracharya", "vishnu", "garuda"],
+      "key_terms": ["Vamana", "Bali", "three steps", "yajna", "Trivikrama", "Shukracharya"]
+    }
+  ]
+}

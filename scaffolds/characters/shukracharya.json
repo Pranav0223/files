@@ -1,0 +1,23 @@
+{
+  "character_id": "shukracharya",
+  "name": "Shukracharya",
+  "aliases": ["Shukracharya", "Shukra", "Ushanas", "Kavya"],
+  "being_type": "Deva",
+  "manifestation_type": "none",
+  "physical": {
+    "skin_color": "fair elderly complexion",
+    "num_arms": 2,
+    "right_hand": "staff",
+    "left_hand": "raised in warning gesture",
+    "crown": "none - sage's matted hair",
+    "clothing": "white sage robes",
+    "ornaments": ["rudraksha beads"],
+    "build": "old thin sage",
+    "posture": "standing, warning Bali"
+  },
+  "scale": {
+    "yuga": "Treta Yuga",
+    "normal_scale": "normal human",
+    "mythological_scale": null
+  }
+}

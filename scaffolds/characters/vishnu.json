@@ -1,0 +1,23 @@
+{
+  "character_id": "vishnu",
+  "name": "Vishnu",
+  "aliases": ["Hari", "Narayana", "Madhava", "Achyuta", "Lord Vishnu", "the Lord"],
+  "being_type": "Deva",
+  "manifestation_type": "Para",
+  "physical": {
+    "skin_color": "dark blue",
+    "num_arms": 2,
+    "right_hand": "Sudarshana Chakra",
+    "left_hand": "Shankha (conch)",
+    "crown": "Kirita Mukuta - tall jewelled crown",
+    "clothing": "yellow dhoti (pitambara)",
+    "ornaments": ["Kaustubha gem on chest", "Vanamala garland", "armlets", "anklets", "earrings"],
+    "build": "tall divine majestic",
+    "posture": "standing upright on Garuda, descending"
+  },
+  "scale": {
+    "yuga": "Satya Yuga",
+    "normal_scale": "divine cosmic scale",
+    "mythological_scale": null
+  }
+}

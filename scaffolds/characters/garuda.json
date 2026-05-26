@@ -1,0 +1,23 @@
+{
+  "character_id": "garuda",
+  "name": "Garuda",
+  "aliases": ["Garuda", "Vainateya", "Suparna", "eagle of Vishnu"],
+  "being_type": "Deva",
+  "manifestation_type": "none - divine vahana",
+  "physical": {
+    "skin_color": "golden with red and white wings",
+    "num_arms": 2,
+    "right_hand": "open, carrying Vishnu",
+    "left_hand": "open, carrying Vishnu",
+    "crown": "golden crown",
+    "clothing": "none - bird divine form",
+    "ornaments": ["golden ornaments on wings"],
+    "build": "giant eagle-human hybrid, wings spread wide",
+    "posture": "flying, wings spread, carrying Vishnu"
+  },
+  "scale": {
+    "yuga": "Satya Yuga",
+    "normal_scale": "giant divine bird",
+    "mythological_scale": null
+  }
+}

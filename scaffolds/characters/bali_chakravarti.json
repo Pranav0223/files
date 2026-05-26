@@ -1,0 +1,23 @@
+{
+  "character_id": "bali_chakravarti",
+  "name": "Bali Chakravarti",
+  "aliases": ["Bali", "Mahabali", "King Bali", "Bali Chakravarti"],
+  "being_type": "Asura",
+  "manifestation_type": "none",
+  "physical": {
+    "skin_color": "dark noble complexion",
+    "num_arms": 2,
+    "right_hand": "kamandalu pouring water (granting gift)",
+    "left_hand": "open in giving gesture",
+    "crown": "royal Asura crown - golden",
+    "clothing": "royal robes, warrior attire",
+    "ornaments": ["gold necklace", "armlets", "earrings", "waistband"],
+    "build": "tall strong noble king",
+    "posture": "seated on throne at yajna"
+  },
+  "scale": {
+    "yuga": "Treta Yuga",
+    "normal_scale": "normal human",
+    "mythological_scale": null
+  }
+}

@@ -1,0 +1,6 @@
+pytesseract
+Pillow
+spacy
+groq
+google-genai
+python-dotenv

@@ -1,0 +1,25 @@
+{
+  "character_id": "vamana",
+  "name": "Vamana",
+  "aliases": ["Vamana", "Trivikrama", "Urukrama", "dwarf brahmin", "Lord Vamana"],
+  "being_type": "Deva",
+  "manifestation_type": "Vibhava",
+  "avatar_of": "vishnu",
+  "avatar_number": 5,
+  "physical": {
+    "skin_color": "dark blue",
+    "num_arms": 2,
+    "right_hand": "danda (wooden staff)",
+    "left_hand": "kamandalu (water pot)",
+    "crown": "none - shikha tuft on head",
+    "clothing": "saffron dhoti, sacred thread (janeu), deer skin",
+    "ornaments": ["sacred thread across chest"],
+    "build": "small dwarf brahmin boy",
+    "posture": "standing upright, humble"
+  },
+  "scale": {
+    "yuga": "Treta Yuga",
+    "normal_scale": "3 feet - dwarf brahmin",
+    "mythological_scale": "Trivikrama form - grows beyond the universe"
+  }
+}

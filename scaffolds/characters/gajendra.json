@@ -1,0 +1,23 @@
+{
+  "character_id": "gajendra",
+  "name": "Gajendra",
+  "aliases": ["Gajendra", "elephant king", "king of elephants"],
+  "being_type": "Manushya",
+  "former_life": "King Indradyumna - devotee of Vishnu reborn as elephant",
+  "physical": {
+    "skin_color": "grey",
+    "num_arms": 2,
+    "right_hand": "lotus flower (offering to Vishnu)",
+    "left_hand": "raised trunk",
+    "crown": "none",
+    "clothing": "none - elephant form",
+    "ornaments": [],
+    "build": "large powerful elephant",
+    "posture": "standing in lake, trunk raised upward"
+  },
+  "scale": {
+    "yuga": "Satya Yuga",
+    "normal_scale": "large elephant",
+    "mythological_scale": null
+  }
+}

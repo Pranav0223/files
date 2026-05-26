@@ -1,0 +1,84 @@
+{
+  "story_id": "vamana_charitam",
+  "story_name": "Vamana Charitam",
+  "scripture": "Srimad Bhagavatam",
+  "skandha": "8",
+  "chapters": "18-22",
+  "yuga": "Treta Yuga",
+  "characters": [
+    "vamana",
+    "bali_chakravarti",
+    "shukracharya",
+    "vishnu",
+    "garuda"
+  ],
+  "stein_elements": {
+    "initiating_event": "Bali conquers heaven, gods lose their abode",
+    "goal": "Vamana approaches Bali to reclaim heaven for gods",
+    "attempt": "Vamana asks for three steps of land, Bali grants despite Shukracharya's warning",
+    "consequence": "Vamana grows into Trivikrama, covers earth and sky in two steps, places third on Bali's head",
+    "reaction": "Bali surrenders, is blessed by Vishnu, sent to rule Sutala loka"
+  },
+  "key_objects": [
+    {
+      "id": "danda",
+      "name": "danda",
+      "type": "sacred_item",
+      "belongs_to": "vamana",
+      "significance": "brahmin staff carried by Vamana"
+    },
+    {
+      "id": "kamandalu_vamana",
+      "name": "kamandalu",
+      "type": "sacred_item",
+      "belongs_to": "vamana",
+      "significance": "water pot carried by Vamana"
+    },
+    {
+      "id": "kamandalu_bali",
+      "name": "kamandalu",
+      "type": "sacred_item",
+      "belongs_to": "bali_chakravarti",
+      "significance": "used by Bali to pour water granting gift to Vamana"
+    },
+    {
+      "id": "yajna_fire",
+      "name": "yajna fire",
+      "type": "natural_element",
+      "belongs_to": null,
+      "significance": "Bali's yajna ceremony setting"
+    }
+  ],
+  "scenes": [
+    {
+      "scene_id": "scene_1",
+      "description": "Vamana arrives at Bali's yajna as dwarf brahmin",
+      "characters_present": ["vamana", "bali_chakravarti", "shukracharya"]
+    },
+    {
+      "scene_id": "scene_2",
+      "description": "Vamana asks Bali for three steps of land",
+      "characters_present": ["vamana", "bali_chakravarti", "shukracharya"]
+    },
+    {
+      "scene_id": "scene_3",
+      "description": "Shukracharya warns Bali not to grant the wish",
+      "characters_present": ["bali_chakravarti", "shukracharya"]
+    },
+    {
+      "scene_id": "scene_4",
+      "description": "Bali grants three steps, pours water from kamandalu",
+      "characters_present": ["vamana", "bali_chakravarti"]
+    },
+    {
+      "scene_id": "scene_5",
+      "description": "Vamana grows into Trivikrama beyond the universe",
+      "characters_present": ["vamana"]
+    },
+    {
+      "scene_id": "scene_6",
+      "description": "Trivikrama places third step on Bali's head, blesses him",
+      "characters_present": ["vamana", "bali_chakravarti"]
+    }
+  ]
+}

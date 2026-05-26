@@ -1,0 +1,71 @@
+{
+  "story_id": "gajendra_moksham",
+  "story_name": "Gajendra Moksham",
+  "scripture": "Srimad Bhagavatam",
+  "skandha": "8",
+  "chapters": "2-4",
+  "yuga": "Satya Yuga",
+  "characters": [
+    "gajendra",
+    "huhu",
+    "vishnu",
+    "garuda"
+  ],
+  "stein_elements": {
+    "initiating_event": "Gajendra enters lake, crocodile grabs his leg",
+    "goal": "Gajendra prays to Vishnu for liberation",
+    "attempt": "Gajendra struggles for thousand years, finally surrenders to Vishnu",
+    "consequence": "Vishnu descends on Garuda, slays crocodile, liberates Gajendra",
+    "reaction": "Gajendra attains moksha, crocodile freed from curse"
+  },
+  "key_objects": [
+    {
+      "id": "lotus_flower",
+      "name": "lotus flower",
+      "type": "sacred_item",
+      "belongs_to": "gajendra",
+      "significance": "offering to Vishnu during prayer"
+    },
+    {
+      "id": "sudarshana_chakra",
+      "name": "Sudarshana Chakra",
+      "type": "weapon",
+      "belongs_to": "vishnu",
+      "significance": "used to slay the crocodile"
+    },
+    {
+      "id": "trikuta_lake",
+      "name": "Trikuta lake",
+      "type": "natural_element",
+      "belongs_to": null,
+      "significance": "where the story takes place"
+    }
+  ],
+  "scenes": [
+    {
+      "scene_id": "scene_1",
+      "description": "Gajendra enters the lake with his herd",
+      "characters_present": ["gajendra"]
+    },
+    {
+      "scene_id": "scene_2",
+      "description": "Crocodile grabs Gajendra's leg, struggle begins",
+      "characters_present": ["gajendra", "huhu"]
+    },
+    {
+      "scene_id": "scene_3",
+      "description": "Gajendra prays to Vishnu with lotus flower raised",
+      "characters_present": ["gajendra"]
+    },
+    {
+      "scene_id": "scene_4",
+      "description": "Vishnu descends on Garuda to rescue Gajendra",
+      "characters_present": ["vishnu", "garuda"]
+    },
+    {
+      "scene_id": "scene_5",
+      "description": "Vishnu slays crocodile with Sudarshana Chakra, Gajendra attains moksha",
+      "characters_present": ["vishnu", "garuda", "gajendra", "huhu"]
+    }
+  ]
+}

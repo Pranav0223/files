@@ -46,13 +46,6 @@ def generate(
         image_extraction
     )
 
-    graph2 = _build_graph2(
-        story_id,
-        story_scaffold,
-        text_extraction,
-        image_extraction
-    )
-
     # Write files
     os.makedirs(output_dir, exist_ok=True)
     g1_path = os.path.join(output_dir, "graph1_3d_generation.json")
@@ -61,10 +54,8 @@ def generate(
     with open(g1_path, "w", encoding="utf-8") as f:
         json.dump(graph1, f, indent=2, ensure_ascii=False)
 
-    with open(g2_path, "w", encoding="utf-8") as f:
-        json.dump(graph2, f, indent=2, ensure_ascii=False)
 
-    return {"graph1_path": g1_path, "graph2_path": g2_path}
+    return {"graph1_path": g1_path}
 
 
 def _build_2d_prompt(char_entry: dict) -> str:
@@ -199,46 +190,3 @@ def _build_graph1(
         "has_image": image_extraction is not None,
         "characters": characters
     }
-
-
-def _build_graph2(
-    story_id, story_scaffold,
-    text_extraction, image_extraction
-) -> dict:
-    """Build Graph 2 — Animation JSON."""
-
-    events = []
-
-    for event in text_extraction.get("events", []):
-        events.append({
-            "id": event.get("id", ""),
-            "sequence_order": event.get("sequence_order", 0),
-            "source_text": event.get("source_text", ""),
-            "action_type": event.get("action_type", ""),
-            "action": event.get("action", ""),
-            "action_modifier": event.get("action_modifier", ""),
-            "duration": event.get("duration", ""),
-            "participants": event.get("participants", [])
-        })
-
-    # Add additional events from image LLM
-    if image_extraction:
-        start_order = len(events) + 1
-        for i, add_event in enumerate(image_extraction.get("additional_events", [])):
-            add_event["id"] = f"event_{start_order + i}"
-            add_event["sequence_order"] = start_order + i
-            add_event["source_text"] = "extracted from image"
-            events.append(add_event)
-
-    return {
-        "graph": "animation",
-        "story": story_scaffold.get("story_name", story_id),
-        "skandha": text_extraction.get("skandha", story_scaffold.get("skandha", "")),
-        "has_image": image_extraction is not None,
-        "events": events
-    }
-
-
-# ── Quick test ────────────────────────────────────────────────────────────────
-if __name__ == "__main__":
-    print("json_generator.py — import and call generate() to use")

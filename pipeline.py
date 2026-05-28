@@ -37,8 +37,6 @@ def run_pipeline(image_path: str, output_dir: str = "output") -> dict:
     # Step 1: OCR
     print("\n[1/6] Running OCR...")
     ocr_result = extract_text(image_path)
-    print(f"      Confidence: {ocr_result['confidence']}%")
-    print(f"      Has image:  {ocr_result['has_image']}")
 
     # Step 2: Rule-based NER
     print("\n[2/6] Rule-based character extraction...")
@@ -69,16 +67,13 @@ def run_pipeline(image_path: str, output_dir: str = "output") -> dict:
 
     # Step 4c: Image LLM
     image_extraction = None
-    if ocr_result["has_image"]:
-        print("\n[4c/6] Image LLM extraction...")
-        known_chars = [c["character_id"] for c in text_extraction.get("characters", [])]
-        story_name  = scaffold_data["story"].get("story_name", story_id)
-        try:
-            image_extraction = extract_from_image(image_path, known_chars, story_name)
-        except Exception as e:
-            print(f"       WARNING: Image LLM failed: {e}")
-    else:
-        print("\n[4c/6] No image — skipping image LLM.")
+    print("\n[4c/6] Image LLM extraction...")
+    known_chars = [c["character_id"] for c in text_extraction.get("characters", [])]
+    story_name  = scaffold_data["story"].get("story_name", story_id)
+    try:
+        image_extraction = extract_from_image(image_path, known_chars, story_name)
+    except Exception as e:
+        print(f"       WARNING: Image LLM failed: {e}")
 
     # Step 5: Graph 1
     print(f"\n[5/6] Generating Graph 1 — 3D model generation...")
@@ -121,7 +116,6 @@ def run_pipeline(image_path: str, output_dir: str = "output") -> dict:
         "graph2_path"   : g2_path,
         "graph3_path"   : g3_path,
         "story_id"      : story_id,
-        "ocr_confidence": ocr_result["confidence"]
     }
 
 

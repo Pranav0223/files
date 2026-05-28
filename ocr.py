@@ -2,151 +2,145 @@
 Module 1 — OCR
 SHRI Project · RISHA Lab · IIT Tirupati
 
-Takes an image file path.
-Returns extracted raw text string.
-Also detects if the page contains an image (non-text region).
+Uses Groq Llama 3.2 Vision (free tier) to extract text from scanned pages.
+Handles all complex layouts:
+  - Text wrapping around illustrations
+  - Fun fact / Did you know boxes
+  - Captions, titles, page numbers
+  - Decorative bordered text boxes
+
+Extracts ONLY the main story narrative text.
+
+Uses same GROQ_API_KEY as llm_text_extractor.py
+Get free key at: https://console.groq.com
 """
 
-import pytesseract
-from PIL import Image, ImageFilter, ImageEnhance
 import os
+import base64
+from PIL import Image
+from groq import Groq
 
 
-def preprocess_image(image_path: str) -> Image.Image:
-    """
-    Preprocess the image before OCR.
-    Improves accuracy on printed book pages.
-    """
-    img = Image.open(image_path)
+from dotenv import load_dotenv
+load_dotenv()
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+GROQ_MODEL   = "meta-llama/llama-4-scout-17b-16e-instruct"
 
-    # Convert to RGB if needed
-    if img.mode != "RGB":
-        img = img.convert("RGB")
+PROMPT = """This is a page from a children's Hindu scripture storybook.
 
-    # Convert to grayscale
-    img = img.convert("L")
+Extract ONLY the main story narrative text from this page.
 
-    # Boost contrast — helps with faded or uneven print
-    enhancer = ImageEnhance.Contrast(img)
-    img = enhancer.enhance(1.3)
+Ignore completely:
+- Fun fact boxes or "Did you know?" boxes
+- Text inside decorative borders or coloured or shaded boxes
+- Captions on illustrations
+- Chapter numbers and titles
+- Page numbers
+- Any text that appears inside a bordered or highlighted region
+- Labels on images
 
-    # Boost sharpness — helps with slightly blurred scans
-    enhancer = ImageEnhance.Sharpness(img)
-    img = enhancer.enhance(1.2)
-
-    return img
+Return only the flowing story text in correct reading order.
+Do not add any explanation or commentary — just the extracted text."""
 
 
-def detect_image_presence(image_path: str) -> bool:
-    """
-    Detect whether the page contains an illustration/image
-    in addition to text.
+def _encode_image(image_path: str) -> tuple:
+    """Encode image to base64 for Groq API."""
+    with open(image_path, "rb") as f:
+        data = base64.b64encode(f.read()).decode("utf-8")
+    # Detect mime type
+    ext = image_path.lower().split(".")[-1]
+    mime = "image/jpeg" if ext in ("jpg", "jpeg") else "image/png"
+    return data, mime
 
-    Simple heuristic: if OCR confidence is low on large regions
-    of the page, those regions likely contain images not text.
-    We use Tesseract's detailed output to check confidence scores.
-    """
+
+def _fix_rotation(img: Image.Image) -> Image.Image:
+    """Fix image rotation using EXIF data."""
     try:
-        img = preprocess_image(image_path)
-        data = pytesseract.image_to_data(
-            img,
-            output_type=pytesseract.Output.DICT,
-            config="--psm 6"
-        )
-
-        # Count words with very low confidence — likely image regions
-        confidences = [
-            int(c) for c in data["conf"]
-            if c != "-1" and c != -1
-        ]
-
-        if not confidences:
-            return False
-
-        low_conf_count = sum(1 for c in confidences if c < 30)
-        total_count = len(confidences)
-
-        # If more than 20% of detected regions have very low confidence
-        # the page likely has significant image content
-        has_image = (low_conf_count / total_count) > 0.2 if total_count > 0 else False
-        return has_image
-
+        from PIL.ExifTags import TAGS
+        exif_data = img._getexif()
+        if exif_data:
+            for tag, value in exif_data.items():
+                if TAGS.get(tag) == "Orientation":
+                    if value == 3:
+                        img = img.rotate(180, expand=True)
+                    elif value == 6:
+                        img = img.rotate(270, expand=True)
+                    elif value == 8:
+                        img = img.rotate(90, expand=True)
+                    break
     except Exception:
-        return False
+        pass
+    # If wider than tall — rotate to portrait
+    w, h = img.size
+    if w > h:
+        img = img.rotate(90, expand=True)
+    return img
 
 
 def extract_text(image_path: str) -> dict:
     """
-    Main OCR function.
+    Main OCR function using Groq Llama Vision.
 
     Args:
-        image_path: path to scanned page image (jpg, png, etc.)
+        image_path: path to scanned page image
 
     Returns:
         {
-            "raw_text": str,       — extracted text
-            "has_image": bool,     — whether page contains illustration
-            "confidence": float    — average OCR confidence 0-100
+            "raw_text": str,
+            "has_image": bool,
+            "confidence": float
         }
     """
     if not os.path.exists(image_path):
         raise FileNotFoundError(f"Image not found: {image_path}")
 
-    img = preprocess_image(image_path)
+    # Fix rotation
+    img = Image.open(image_path)
+    img = _fix_rotation(img)
 
-    # PSM 6 — assume uniform block of text — best for book pages
-    config = "--psm 6 --oem 1"
+    # Save rotated image to temp file
+    temp_path = image_path + "_temp.jpg"
+    img.save(temp_path, "JPEG", quality=95)
 
-    # Get text
-    raw_text = pytesseract.image_to_string(img, config=config, lang="eng")
+    # Encode image
+    img_data, mime_type = _encode_image(temp_path)
 
-    # Get confidence data
-    data = pytesseract.image_to_data(
-        img,
-        output_type=pytesseract.Output.DICT,
-        config=config
+    # Clean up temp file
+    try:
+        os.remove(temp_path)
+    except Exception:
+        pass
+
+    # Call Groq Llama Vision
+    client   = Groq(api_key=GROQ_API_KEY)
+    response = client.chat.completions.create(
+        model=GROQ_MODEL,
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": f"data:{mime_type};base64,{img_data}"
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "text": PROMPT
+                    }
+                ]
+            }
+        ],
+        max_tokens=2000,
+        temperature=0.1
     )
 
-    confidences = [
-        int(c) for c in data["conf"]
-        if str(c) != "-1" and c != -1 and int(c) > 0
-    ]
-    avg_confidence = sum(confidences) / len(confidences) if confidences else 0.0
-
-    # Clean up extracted text
-    cleaned_text = _clean_text(raw_text)
-
-    # Detect image presence
-    has_image = detect_image_presence(image_path)
+    raw_text = response.choices[0].message.content.strip()
 
     return {
-        "raw_text": cleaned_text,
-        "has_image": has_image,
-        "confidence": round(avg_confidence, 1)
+        "raw_text": raw_text
     }
-
-
-def _clean_text(text: str) -> str:
-    """
-    Clean raw OCR output.
-    Removes excessive whitespace and common OCR artifacts.
-    """
-    import re
-
-    # Replace form feeds with newlines
-    text = text.replace("\f", "\n")
-
-    # Collapse multiple spaces to single space
-    text = re.sub(r"[ \t]{2,}", " ", text)
-
-    # Collapse more than 2 consecutive newlines
-    text = re.sub(r"\n{3,}", "\n\n", text)
-
-    # Remove lines that are just whitespace
-    lines = [line.strip() for line in text.split("\n")]
-    lines = [line for line in lines if line]
-
-    return "\n".join(lines).strip()
 
 
 # ── Quick test ────────────────────────────────────────────────────────────────
@@ -156,7 +150,10 @@ if __name__ == "__main__":
         print("Usage: python ocr.py <image_path>")
         sys.exit(1)
 
-    result = extract_text(sys.argv[1])
-    print(f"Confidence  : {result['confidence']}%")
-    print(f"Has image   : {result['has_image']}")
-    print(f"Extracted text:\n{'-'*40}\n{result['raw_text']}")
+    try:
+        result = extract_text(sys.argv[1])
+        print(f"Text length: {len(result['raw_text'])} chars")
+        print(f"\nExtracted text:\n{'-'*40}\n{result['raw_text']}")
+    except Exception as e:
+        print(f"ERROR: {e}")
+        sys.exit(1)
